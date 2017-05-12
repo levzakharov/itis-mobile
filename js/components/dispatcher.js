@@ -6,7 +6,7 @@ import NavigationExperimental from 'react-native-deprecated-custom-components';
 
 import Spinner from './core/spinner';
 import AuthPage from './auth';
-import MainPage from './main';
+import NewsList from './news/news_list';
 
 import Route from '../enums/route';
 
@@ -47,6 +47,6 @@ function navigatorRenderScene(route, navigator) {
     case Route.auth:
       return <AuthPage navigator={navigator}/>;
     case Route.main:
-      return <MainPage navigator={navigator}/>;
+      return <NewsList navigator={navigator}/>;
   }
 }
