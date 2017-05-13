@@ -66,6 +66,7 @@ function renderRow(news) {
   return <NewsRow news={news} navigator={this.props.navigator}/>;
 }
 
+// styles here...
 const styles = StyleSheet.create({
   list: {
     backgroundColor: 'white'

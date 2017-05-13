@@ -5,6 +5,7 @@ import {
   Button,
   TextInput,
   AsyncStorage,
+  StyleSheet
 } from 'react-native';
 
 import Route from '../enums/route';
@@ -68,3 +69,8 @@ function auth() {
     id: Route.newsList
   });
 }
+
+// styles here...
+const styles = StyleSheet.create({
+
+});

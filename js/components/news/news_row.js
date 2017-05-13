@@ -27,7 +27,7 @@ export default class NewsRow extends React.Component {
     );
   }
 }
-
+// styles here...
 const styles = StyleSheet.create({
   rowBlock: {
     flexDirection: 'row',
