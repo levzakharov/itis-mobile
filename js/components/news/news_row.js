@@ -15,15 +15,17 @@ export default class NewsRow extends React.Component {
     const news = this.props.news;
 
     return(
-      <Card title={news.title}
-          containerStyle={this.props.style}>
-        <Text>
-          {news.content}
-        </Text>
-        <View style={styles.rowBlock}>
-          <Text>Some text here...</Text>
-        </View>
-      </Card>
+      <View style={styles.view}>
+        <Card title={news.title}
+            containerStyle={this.props.style}>
+          <Text>
+            {news.content}
+          </Text>
+          <View style={styles.rowBlock}>
+            <Text>Some text here...</Text>
+          </View>
+        </Card>
+      </View>
     );
   }
 }
@@ -36,5 +38,10 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 15,
     color: 'gray'
+  },
+  view: {
+    backgroundColor: '#214268',
+    paddingTop: 20,
+    flex: 1
   }
 });
