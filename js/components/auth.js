@@ -15,19 +15,21 @@ import Environment from '../environment/environment';
 export default class AuthPage extends React.Component {
   render() {
     return (
-      <View style={{flex: 1}}>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Имя пользователя"
-          onChangeText={(login) => this.setState({login})}
-        />
-        <TextInput
-          style={{height: 40}}
-          placeholder="Пароль"
-          secureTextEntry={true}
-          onChangeText={(pass) => this.setState({pass})}
-        />
-        <Button title="Войти" onPress={auth.bind(this)} />
+      <View style={styles.view}>
+        <View style={styles.innerView}>
+          <TextInput
+            style={styles.input}
+            placeholder="Имя пользователя"
+            onChangeText={(login) => this.setState({login})}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Пароль"
+            secureTextEntry={true}
+            onChangeText={(pass) => this.setState({pass})}
+          />
+          <Button title="Войти" onPress={auth.bind(this)}/>
+        </View>   
       </View>
     );
   }
@@ -72,5 +74,30 @@ function auth() {
 
 // styles here...
 const styles = StyleSheet.create({
+ view: {
+    flex: 1,
+    backgroundColor: '#214268'
+  },
+
+  input: {
+    height: 40,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+
+  innerView: {
+    backgroundColor: '#fff',
+    margin: 20,
+    marginTop: 50,
+    padding: 30
+  },
+
+  // image style 
+  image: {
+    width: 200,
+    marginTop: 40,
+    marginBottom: 20
+  }
+
 
 });
