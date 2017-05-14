@@ -59,7 +59,12 @@ function dataSource() {
   });
   // return ds.cloneWithRows(this.state.news)
   return ds.cloneWithRows([{title: 'first news!', content: 'testing content...'},
-    {title: 'second news', content: 'testing content...'}]);
+    {title: 'second news', content: 'testing content...'},
+    {title: 'other news', content: 'testing content...'},
+    {title: 'other news', content: 'testing content...'},
+    {title: 'other news', content: 'testing content...'},
+    {title: 'other news', content: 'testing content...'},
+    {title: 'other news', content: 'testing content...'}]);
 }
 
 function renderRow(news) {

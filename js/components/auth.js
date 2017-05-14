@@ -5,7 +5,8 @@ import {
   Button,
   TextInput,
   AsyncStorage,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 
 import Route from '../enums/route';
@@ -16,6 +17,10 @@ export default class AuthPage extends React.Component {
   render() {
     return (
       <View style={styles.view}>
+        <Image
+          style={styles.image}
+          source={require('../images/logo.png')}
+        />
         <View style={styles.innerView}>
           <TextInput
             style={styles.input}
@@ -29,7 +34,7 @@ export default class AuthPage extends React.Component {
             onChangeText={(pass) => this.setState({pass})}
           />
           <Button title="Войти" onPress={auth.bind(this)}/>
-        </View>   
+        </View>
       </View>
     );
   }
@@ -92,11 +97,13 @@ const styles = StyleSheet.create({
     padding: 30
   },
 
-  // image style 
+  // image style
   image: {
-    width: 200,
+    width: 250,
+    height: 40,
     marginTop: 40,
-    marginBottom: 20
+    resizeMode: 'stretch',
+    alignSelf: 'center'
   }
 
 
