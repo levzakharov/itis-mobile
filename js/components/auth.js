@@ -41,40 +41,40 @@ export default class AuthPage extends React.Component {
 }
 
 function auth() {
-  // fetch(Environment.BASE_URL + Api.auth, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     login: this.state.login,
-  //     pass: this.state.pass,
-  //   })
-  // })
-  //   .then(response => response.json())
-  //   .then(resp => {
-  //     let token = resp.data;
-  //     if (token) {
-  //       AsyncStorage.setItem(
-  //         'client_token', JSON.stringify(token)
-  //       );
-  //       this.props.navigator.resetTo({
-  //         id: Route.main
-  //       });
-  //     } else {
-  //       Alert.alert('Упс!', [{ text: 'ы' }]);
-  //     }
-  //   })
-  //   .catch((error) => console.error(error))
-  //   .done();
-  AsyncStorage.setItem(
-    'client_token', 'tobi pizda'
-  );
-
-  this.props.navigator.resetTo({
-    id: Route.newsList
-  });
+  const params = {
+    password: this.state.pass,
+    username: this.state.login,
+    grant_type: 'password'
+  };
+  const formBody = Object.keys(params)
+    .map(key => encodeURIComponent(key) +
+                '=' + encodeURIComponent(params[key]))
+    .join('&')
+  fetch(Environment.BASE_URL + Api.auth, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic bXktY2xpZW50Og=='
+    },
+    body: formBody
+  })
+    .then(response => response.json())
+    .then(resp => {
+      let token = resp.access_token;
+      if (token) {
+        AsyncStorage.setItem(
+          'client_token', JSON.stringify(token)
+        );
+        this.props.navigator.resetTo({
+          id: Route.newsList
+        });
+      } else {
+        Alert.alert('Упс!', [{ text: 'ы' }]);
+      }
+    })
+    .catch((error) => console.error(error))
+    .done();
 }
 
 // styles here...
@@ -105,6 +105,4 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     alignSelf: 'center'
   }
-
-
 });

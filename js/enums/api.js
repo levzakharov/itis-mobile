@@ -1,4 +1,4 @@
 export default Api = {
-  auth: '/api/auth',
+  auth: '/oauth/token',
   news: '/api/news'
 }
