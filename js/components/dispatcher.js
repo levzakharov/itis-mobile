@@ -24,7 +24,8 @@ export default class InitialDispatcher extends React.Component {
       return <Spinner/>
     }
 
-    const initialRoute = token == null ? Route.auth : Route.main;
+    // const initialRoute = token == null ? Route.auth : Route.main;
+    const initialRoute = Route.auth; // TEMPORARY : to ease styles development.
     return (
       <NavigationExperimental.Navigator
         initialRoute={{id: initialRoute}}
@@ -46,7 +47,7 @@ function navigatorRenderScene(route, navigator) {
   switch (route.id) {
     case Route.auth:
       return <AuthPage navigator={navigator}/>;
-    case Route.main:
+    case Route.newsList:
       return <NewsList navigator={navigator}/>;
   }
 }
