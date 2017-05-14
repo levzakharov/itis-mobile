@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
 
   // image style
   image: {
-    width: 250,
-    height: 40,
+    width: 200,
+    height: 30,
     marginTop: 40,
     resizeMode: 'stretch',
     alignSelf: 'center'
