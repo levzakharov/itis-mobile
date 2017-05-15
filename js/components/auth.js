@@ -26,6 +26,7 @@ export default class AuthPage extends React.Component {
             style={styles.input}
             placeholder="Имя пользователя"
             onChangeText={(login) => this.setState({login})}
+            autoCapitalize="none"
           />
           <TextInput
             style={styles.input}

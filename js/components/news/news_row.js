@@ -19,7 +19,7 @@ export default class NewsRow extends React.Component {
         <Card title={news.title}
             containerStyle={this.props.style}>
           <Text>
-            {news.content}
+            {news.text}
           </Text>
           <View style={styles.rowBlock}>
             <Text>Some text here...</Text>
