@@ -7,6 +7,7 @@ import NavigationExperimental from 'react-native-deprecated-custom-components';
 import Spinner from './core/spinner';
 import AuthPage from './auth';
 import NewsList from './news/news_list';
+import NotifList from './notif/notif_list';
 
 import Route from '../enums/route';
 
@@ -48,5 +49,7 @@ function navigatorRenderScene(route, navigator) {
       return <AuthPage navigator={navigator}/>;
     case Route.newsList:
       return <NewsList navigator={navigator}/>;
+    case Route.notifList:
+      return <NotifList navigator={navigator}/>;
   }
 }
