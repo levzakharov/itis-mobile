@@ -16,10 +16,10 @@ export default class NotifRow extends React.Component {
 
     return(
       <View style={styles.view}>
-        <Card title={news.title}
+        <Card title={notif.id}
             containerStyle={this.props.style}>
           <Text>
-            {news.text}
+            {notif.notification.text}
           </Text>
           <View style={styles.rowBlock}>
             <Text>Some text here...</Text>

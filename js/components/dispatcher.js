@@ -8,6 +8,7 @@ import Spinner from './core/spinner';
 import AuthPage from './auth';
 import NewsList from './news/news_list';
 import NotifList from './notif/notif_list';
+import NewNotif from './notif/new_notif';
 
 import Route from '../enums/route';
 
@@ -25,7 +26,8 @@ export default class InitialDispatcher extends React.Component {
       return <Spinner/>
     }
 
-    const initialRoute = token == null ? Route.auth : Route.newsList;
+    // const initialRoute = token == null ? Route.auth : Route.notifList;
+    const initialRoute = Route.newNotif;
     return (
       <NavigationExperimental.Navigator
         initialRoute={{id: initialRoute}}
@@ -51,5 +53,7 @@ function navigatorRenderScene(route, navigator) {
       return <NewsList navigator={navigator}/>;
     case Route.notifList:
       return <NotifList navigator={navigator}/>;
+    case Route.newNotif:
+      return <NewNotif navigator={navigator}/>;
   }
 }
