@@ -27,7 +27,7 @@ export default class InitialDispatcher extends React.Component {
     }
 
     // const initialRoute = token == null ? Route.auth : Route.notifList;
-    const initialRoute = Route.newNotif;
+    const initialRoute = Route.newsList;
     return (
       <NavigationExperimental.Navigator
         initialRoute={{id: initialRoute}}
