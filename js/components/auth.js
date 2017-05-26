@@ -71,10 +71,10 @@ function auth() {
           id: Route.newsList
         });
       } else {
-        Alert.alert('Упс!', [{ text: 'ы' }]);
+        Alert.alert('Упс!', 'ы');
       }
     })
-    .catch((error) => console.error(error))
+    .catch((error) => console.log(error))
     .done();
 }
 

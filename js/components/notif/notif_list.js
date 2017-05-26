@@ -36,20 +36,19 @@ export default class NotifList extends React.Component {
         enableEmptySections={true}
         style={styles.list}/>
     );
-    return <Text>!</Text>
   }
 
   getNotifications() {
     AsyncStorage.getItem('client_token', (err, token) => {
       token = JSON.parse(token);
       fetch(Environment.BASE_URL + Api.notif, {
-        headers: {
-          'Authorization': 'Bearer ' + token
-        }
+        //TODO
+        // headers: {
+        //   'Authorization': 'Bearer ' + token
+        // }
       })
         .then(response => response.json())
         .then(resp => {
-          console.log(resp);
           this.setState({
             notifs: resp
           });
@@ -68,7 +67,9 @@ function dataSource() {
 }
 
 function renderRow(notif) {
-  return <NotifRow notif={notif} navigator={this.props.navigator}/>;
+  return <NotifRow notif={notif.notification}
+                   navigator={this.props.navigator}
+         />;
 }
 
 // styles here...
