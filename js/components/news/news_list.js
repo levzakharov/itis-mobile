@@ -57,21 +57,23 @@ export default class NewsList extends React.Component {
   }
 
   getNews() {
-    this.setState({news: 'asdfasd'})
-    // fetch(Environment.BASE_URL + Api.news, {
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     }
-    //   })
-    //   .then(response => response.json())
-    //   .then(resp => {
-    //     this.setState({
-    //       news: resp
-    //     });
-    //   })
-    //   .catch((error) => console.error(error))
-    //   .done();
+    AsyncStorage.getItem('client_token', (err, token) => {
+      token = JSON.parse(token);
+      fetch(Environment.BASE_URL + Api.news, {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+        .then(response => response.json())
+        .then(resp => {
+          this.setState({
+            news: resp
+          });
+        })
+        .catch((error) => console.error(error))
+        .done();
+    });
   }
 
   _renderMenu() {
@@ -124,12 +126,7 @@ function dataSource() {
   const ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 !== r2
   });
-  // return ds.cloneWithRows(this.state.news);
-  return ds.cloneWithRows([{title: 'first news!', content: 'testing content...'},
-    {title: 'second news', content: 'testing content...'},
-    {title: 'second news', content: 'testing content...'},
-    {title: 'second news', content: 'testing content...'},
-    {title: 'second news', content: 'testing content...'},]);
+  return ds.cloneWithRows(this.state.news);
 }
 
 function renderRow(news) {

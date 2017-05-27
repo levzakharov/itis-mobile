@@ -16,7 +16,11 @@ import Environment from '../../environment/environment';
 export default class NotifList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      ds: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+      })
+    };
   }
 
   componentDidMount() {
@@ -28,10 +32,10 @@ export default class NotifList extends React.Component {
 
     if(!notifs)
       return <Spinner/>;
-
+    
     return (
       <ListView
-        dataSource={dataSource.apply(this)}
+        dataSource={this.state.ds}
         renderRow={renderRow.bind(this)}
         enableEmptySections={true}
         style={styles.list}/>
@@ -41,29 +45,43 @@ export default class NotifList extends React.Component {
   getNotifications() {
     AsyncStorage.getItem('client_token', (err, token) => {
       token = JSON.parse(token);
+      const headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+      // get unread notifications
       fetch(Environment.BASE_URL + Api.notif, {
-        //TODO
-        // headers: {
-        //   'Authorization': 'Bearer ' + token
-        // }
+        headers: headers
       })
         .then(response => response.json())
         .then(resp => {
           this.setState({
-            notifs: resp
+            notifs: resp,
+            ds: this.state.ds.cloneWithRows(resp)
+          });
+        })
+        .catch((error) => console.error(error))
+        .done();
+      // get sent notifications
+      fetch(Environment.BASE_URL + Api.sentNotif, {
+        headers: headers
+      })
+        .then(response => response.json())
+        .then(resp => {
+          this.setState({
+            sentNotif: resp
           });
         })
         .catch((error) => console.error(error))
         .done();
     });
   }
-}
 
-function dataSource() {
-  const ds = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1 !== r2
-  });
-  return ds.cloneWithRows(this.state.notifs);
+  updateDataSource(notifications) {
+    this.setState({
+      ds: this.state.ds.cloneWithRows(notifications)
+    });
+  }
 }
 
 function renderRow(notif) {

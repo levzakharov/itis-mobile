@@ -44,23 +44,18 @@ export default class NewNotif extends React.Component {
 function sendNotification() {
   AsyncStorage.getItem('client_token', (err, token) => {
     token = JSON.parse(token);
-    const params = {
-      groups: this.state.groups.split(' '),
-      theme: this.state.theme,
-      text: this.state.text
-    };
-    const formBody = Object.keys(params)
-      .map(key => encodeURIComponent(key) +
-                  '=' + encodeURIComponent(params[key]))
-      .join('&');
     fetch(Environment.BASE_URL + Api.newNotif, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       },
-      body: formBody
+      body: JSON.stringify({
+        groups: this.state.groups.split(' '),
+        theme: this.state.theme,
+        text: this.state.text
+      })
     })
       .then(response => response.json())
       .then(resp => {
