@@ -3,16 +3,22 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 
 import {
   Card
 } from 'react-native-elements';
 
+import DateUtil from '../../util/date_util.js';
+
 export default class NotifRow extends React.Component {
   render() {
     const notif = this.props.notif;
+
+    let dateTime = Platform.OS === 'ios' ? DateUtil.getDateTime(notif.date)
+          : DateUtil.getDateTimeAndroid(notif.date);
 
     return(
       <View style={styles.view}>
@@ -22,7 +28,7 @@ export default class NotifRow extends React.Component {
             {notif.text}
           </Text>
           <View style={styles.rowBlock}>
-            <Text>{notif.date}</Text>
+            <Text>{dateTime}</Text>
           </View>
         </Card>
       </View>

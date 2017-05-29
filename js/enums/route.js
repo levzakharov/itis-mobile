@@ -3,5 +3,6 @@ export default Route = {
   newsList: 1,
   notifList: 2,
   sentNotifList: 3,
-  newNotif: 4
+  newNotif: 4,
+  mySchedule: 5
 }

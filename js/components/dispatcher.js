@@ -9,6 +9,7 @@ import AuthPage from './auth';
 import NewsList from './news/news_list';
 import NotifList from './notif/notif_list';
 import NewNotif from './notif/new_notif';
+import MySchedule from './schedule/my_schedule';
 
 import Route from '../enums/route';
 
@@ -54,5 +55,7 @@ function navigatorRenderScene(route, navigator) {
       return <NotifList navigator={navigator}/>;
     case Route.newNotif:
       return <NewNotif navigator={navigator}/>;
+    case Route.mySchedule:
+      return <MySchedule navigator={navigator}/>;
   }
 }

@@ -13,6 +13,8 @@ import NotifRow from './notif_row';
 import Api from '../../enums/api';
 import Environment from '../../environment/environment';
 
+import MyDrawerLayout from '../core/my_drawer_layout';
+
 export default class NotifList extends React.Component {
   constructor(props) {
     super(props);
@@ -32,13 +34,15 @@ export default class NotifList extends React.Component {
 
     if(!notifs)
       return <Spinner/>;
-    
+
     return (
-      <ListView
-        dataSource={this.state.ds}
-        renderRow={renderRow.bind(this)}
-        enableEmptySections={true}
-        style={styles.list}/>
+      <MyDrawerLayout navigator={this.props.navigator} title='Уведомления'>
+        <ListView
+          dataSource={this.state.ds}
+          renderRow={renderRow.bind(this)}
+          enableEmptySections={true}
+          style={styles.list}/>
+      </MyDrawerLayout>
     );
   }
 
