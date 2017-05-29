@@ -16,13 +16,12 @@ export default class NewsRow extends React.Component {
 
     return(
       <View style={styles.view}>
-        <Card title={news.title}
-            containerStyle={this.props.style}>
-          <Text>
-            {news.text}
-          </Text>
+        <Card title={news.title} containerStyle={this.props.style}>
           <View style={styles.rowBlock}>
-            <Text>Some text here...</Text>
+            <Text style={styles.title}>
+              {news.text}
+            </Text>
+            <Text style={styles.text}>Some text here...</Text>
           </View>
         </Card>
       </View>
@@ -33,7 +32,8 @@ export default class NewsRow extends React.Component {
 const styles = StyleSheet.create({
   rowBlock: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: '#fff'
   },
   icon: {
     fontSize: 15,
@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
   },
   view: {
     backgroundColor: '#214268',
-    paddingTop: 20,
+    flex: 1
+  },
+  text: {
+    textAlign: 'left',
     flex: 1
   }
 });

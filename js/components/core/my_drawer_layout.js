@@ -47,7 +47,7 @@ export default class MyDrawerLayout extends React.Component {
 
   renderMenu() {
     return (
-      <View style={{backgroundColor: '#F9F9F9', flex: 1}}>
+      <View style={{backgroundColor: '#275589', flex: 1}}>
         <View style={styles.drawerButtonsContainer}>
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressNews.bind(this)}>
             <Text style={styles.drawerButtonText}>Новости</Text>
@@ -104,17 +104,17 @@ const styles = StyleSheet.create({
   notifButtonContainer: {
     position: 'absolute',
     top: 35,
-    right: 15
+    right: 15,
   },
   drawerButtonsContainer: {
-    marginTop: 100
+    marginTop: 35,
   },
   drawerButton: {
     backgroundColor: '#275589',
     padding: 15,
-    marginBottom: 20
+    marginBottom: 0
   },
   drawerButtonText: {
-    color: 'white'
+    color: '#fff'
   }
 });

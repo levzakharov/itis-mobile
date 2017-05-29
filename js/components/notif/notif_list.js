@@ -97,6 +97,6 @@ function renderRow(notif) {
 // styles here...
 const styles = StyleSheet.create({
   list: {
-    backgroundColor: 'white'
+    backgroundColor: '#214268'
   }
 });
