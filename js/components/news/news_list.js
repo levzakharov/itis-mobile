@@ -76,6 +76,6 @@ function renderRow(news) {
 
 const styles = StyleSheet.create({
   list: {
-    backgroundColor: 'white'
+    backgroundColor: '#214268'
   }
 });

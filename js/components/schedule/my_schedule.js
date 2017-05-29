@@ -10,11 +10,15 @@ export default class Schedule extends React.Component {
   render() {
     return (
       <MyDrawerLayout navigator={this.props.navigator} title='Расписание'>
-        <Text>Страница с расписанием</Text>
+        <Text style={styles.text}>Страница с расписанием</Text>
       </MyDrawerLayout>
     )
   }
 }
 
 const styles = StyleSheet.create({
+	text: {
+	    backgroundColor: 'white',
+	    padding: 20
+	  }
 });
