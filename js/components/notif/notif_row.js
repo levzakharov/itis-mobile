@@ -22,8 +22,7 @@ export default class NotifRow extends React.Component {
 
     return(
       <View style={styles.view}>
-        <Card title={notif.theme}
-            containerStyle={this.props.style}>
+        <Card title={notif.theme}>
           <Text>
             {notif.text}
           </Text>
@@ -38,12 +37,9 @@ export default class NotifRow extends React.Component {
 // styles here...
 const styles = StyleSheet.create({
   rowBlock: {
+    alignSelf: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  icon: {
-    fontSize: 15,
-    color: 'gray'
   },
   view: {
     backgroundColor: '#214268',
