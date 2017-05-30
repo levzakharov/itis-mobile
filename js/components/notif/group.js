@@ -10,23 +10,32 @@ import {
   Card
 } from 'react-native-elements';
 
-import DateUtil from '../../util/date_util.js';
-
 export default class Group extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      on: false
+    };
+  }
+
   render() {
     const group = this.props.group;
 
     return (
       <View>
+        <Text>{group.number}</Text>
         <Switch
-          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginRight: 50}}
-          value={group.number}
+          onValueChange={(on) => {
+            this.setState({on});
+            this.props.cb(group, on);
+          }}
+          style={{marginBottom: 10}}
+          value={this.state.on}
         />
-        <Text style={{marginRight: 100}}>{group.number}</Text>
       </View>
     );
   }
+
 }
 
 // styles here...

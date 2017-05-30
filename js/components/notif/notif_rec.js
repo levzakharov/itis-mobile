@@ -11,6 +11,7 @@ import {
 
 import Spinner from '../core/spinner';
 
+import Route from '../../enums/route';
 import Api from '../../enums/api';
 import Environment from '../../environment/environment';
 
@@ -20,7 +21,9 @@ import MyDrawerLayout from '../core/my_drawer_layout';
 export default class NotifRec extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedGroups: new Set()
+    };
   }
 
   componentDidMount() {
@@ -37,6 +40,7 @@ export default class NotifRec extends React.Component {
       <MyDrawerLayout
         navigator={this.props.navigator}
         title='Выбор получателей'
+        displayGroupsCb={displayGroupsCb.bind(this)}
       >
         <ListView
           dataSource={dataSource.apply(this)}
@@ -65,13 +69,21 @@ export default class NotifRec extends React.Component {
               groups = groups.concat(courseGroups);
             })
           this.setState({
-            groups: resp
+            groups: groups
           });
         })
         .catch((error) => console.error(error))
         .done();
     });
   }
+}
+
+function displayGroupsCb() {
+  AsyncStorage.setItem(
+    'groups',
+    JSON.stringify(Array.from(this.state.selectedGroups)),
+    () => this.props.navigator.resetTo({id: Route.newNotif})
+  );
 }
 
 function dataSource() {
@@ -85,8 +97,16 @@ function renderRow(group) {
   return <Group group={group} cb={addGroupCb.bind(this)}/>;
 }
 
-function addGroupCb(group) {
-  let groups = this.state.groups
+function addGroupCb(group, on) {
+  let groups = this.state.selectedGroups;
+  if (on) {
+    groups.add(group.number);
+  } else {
+    groups.delete(group.number);
+  }
+  this.setState({
+    selectedGroups: groups
+  });
 }
 
 // styles here...

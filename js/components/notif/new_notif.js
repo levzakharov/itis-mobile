@@ -8,6 +8,8 @@ import {
   StyleSheet
 } from 'react-native';
 
+import Spinner from '../core/spinner';
+
 import Route from '../../enums/route';
 import Api from '../../enums/api';
 import Environment from '../../environment/environment';
@@ -17,9 +19,17 @@ import MyDrawerLayout from '../core/my_drawer_layout';
 export default class NewNotif extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
+    this.setSelectedGroups();
   }
 
   render() {
+    let groups = this.state.groups;
+
+    if (groups === undefined) {
+      return <Spinner/>
+    }
+
     return (
       <MyDrawerLayout
         navigator={this.props.navigator}
@@ -32,9 +42,9 @@ export default class NewNotif extends React.Component {
             onChangeText={(theme) => this.setState({theme})}
           />
           <TextInput
-            placeholder="Номера групп через пробел"
-            onChangeText={(groups) => this.setState({groups})}
+            placeholder="Выбрать номера групп"
             onFocus={this.onFocus.bind(this)}
+            defaultValue={groups}
           />
           <TextInput
             placeholder="Текст"
@@ -50,6 +60,14 @@ export default class NewNotif extends React.Component {
   onFocus() {
     this.props.navigator.push({
         id: Route.notifRec
+    });
+  }
+
+  setSelectedGroups() {
+    AsyncStorage.getItem('groups', (err, res) => {
+      this.setState({
+        groups: JSON.parse(res).toString()
+      });
     });
   }
 }
