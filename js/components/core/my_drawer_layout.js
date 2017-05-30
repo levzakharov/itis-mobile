@@ -3,6 +3,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  AsyncStorage,
   View,
   Image
 } from 'react-native';
@@ -69,6 +70,10 @@ export default class MyDrawerLayout extends React.Component {
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressSchedule.bind(this)}>
             <Text style={styles.drawerButtonText}>Расписание</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity style={styles.drawerButton} onPress={this.onLogout.bind(this)}>
+            <Text style={styles.drawerButtonText}>Выйти</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
@@ -97,6 +102,14 @@ export default class MyDrawerLayout extends React.Component {
       id: Route.mySchedule
     });
   }
+
+  onLogout() {
+    AsyncStorage.removeItem('client_token');
+    this.props.navigator.resetTo({
+      id: Route.auth
+    });
+  }
+
 }
 
 const styles = StyleSheet.create({
