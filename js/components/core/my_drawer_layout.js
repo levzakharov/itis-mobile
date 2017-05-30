@@ -40,7 +40,7 @@ export default class MyDrawerLayout extends React.Component {
         <EvilIcon name='bell' size={25} color='white'/>
       </TouchableOpacity>
 
-    if (route === Route.newNotif) {
+    if (route === Route.notifRec || route === Route.newNotif) {
       leftBut =
         <TouchableOpacity
           style={styles.menuButtonContainer}
@@ -48,13 +48,17 @@ export default class MyDrawerLayout extends React.Component {
         >
           <EvilIcon name='close' size={25} color='white'/>
         </TouchableOpacity>
-      rightBut =
-        <TouchableOpacity
-          style={styles.notifButtonContainer}
-          onPress={this.props.sendNotifCb}
-        >
-          <EvilIcon name='sc-telegram' size={25} color='white'/>
-        </TouchableOpacity>
+      if (route === Route.newNotif) {
+        rightBut =
+          <TouchableOpacity
+            style={styles.notifButtonContainer}
+            onPress={this.props.sendNotifCb}
+          >
+            <EvilIcon name='sc-telegram' size={25} color='white'/>
+          </TouchableOpacity>
+      } else {
+        rightBut = null;
+      }
     } else {
       const roles = this.state.roles;
 

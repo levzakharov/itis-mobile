@@ -4,5 +4,6 @@ export default Route = {
   notifList: 2,
   sentNotifList: 3,
   newNotif: 4,
-  mySchedule: 5
+  mySchedule: 5,
+  notifRec: 6
 }

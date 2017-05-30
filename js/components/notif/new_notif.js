@@ -8,6 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
+import Route from '../../enums/route';
 import Api from '../../enums/api';
 import Environment from '../../environment/environment';
 
@@ -33,6 +34,7 @@ export default class NewNotif extends React.Component {
           <TextInput
             placeholder="Номера групп через пробел"
             onChangeText={(groups) => this.setState({groups})}
+            onFocus={this.onFocus.bind(this)}
           />
           <TextInput
             placeholder="Текст"
@@ -43,6 +45,12 @@ export default class NewNotif extends React.Component {
         </View>
       </MyDrawerLayout>
     );
+  }
+
+  onFocus() {
+    this.props.navigator.push({
+        id: Route.notifRec
+    });
   }
 }
 
