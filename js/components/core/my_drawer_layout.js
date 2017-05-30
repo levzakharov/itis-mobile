@@ -7,11 +7,23 @@ import {
   Image
 } from 'react-native';
 
+import Route from '../../enums/route';
+import Role from '../../enums/role';
 import DrawerLayout from 'react-native-drawer-layout';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 
 export default class MyDrawerLayout extends React.Component {
   render() {
+    let newNotifBut = null;
+    const roles = this.props.roles;
+    if (roles && (roles.indexOf(Role.star) !== -1 || roles.indexOf(Role.teach) !== -1))
+      newNotifBut =
+        <TouchableOpacity
+          style={styles.newNotifButtonContainer}
+          onPress={this.onPressNewNotif.bind(this)}
+        >
+          <EvilIcon name='pencil' size={25} color='white'/>
+        </TouchableOpacity>
     return(
       <DrawerLayout
         ref={(drawer) => {this.drawer = drawer;}}
@@ -19,6 +31,7 @@ export default class MyDrawerLayout extends React.Component {
         renderNavigationView={this.renderMenu.bind(this)}>
         <View style={styles.navBar}>
           <Text style={styles.navBarTitle}>{this.props.title}</Text>
+          {newNotifBut}
           <TouchableOpacity
             style={styles.notifButtonContainer}
             onPress={this.onPressNotif.bind(this)}
@@ -61,6 +74,12 @@ export default class MyDrawerLayout extends React.Component {
     )
   }
 
+  onPressNewNotif() {
+    this.props.navigator.push({
+      id: Route.newNotif
+    });
+  }
+
   onPressNotif() {
     this.props.navigator.push({
       id: Route.notifList
@@ -100,6 +119,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     marginTop: 12,
+  },
+  newNotifButtonContainer: {
+    position: 'absolute',
+    top: 35,
+    right: 50,
   },
   notifButtonContainer: {
     position: 'absolute',

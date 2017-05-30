@@ -74,7 +74,6 @@ function auth() {
         })
           .then(response => response.json())
           .then(roles => {
-            console.log(roles);
             if (roles.indexOf(Role.work) == -1) {
               AsyncStorage.multiSet([
                 ['client_token', JSON.stringify(token)],

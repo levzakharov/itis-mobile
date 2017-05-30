@@ -23,6 +23,7 @@ export default class NotifList extends React.Component {
         rowHasChanged: (r1, r2) => r1 !== r2
       })
     };
+    this.setRoles();
   }
 
   componentDidMount() {
@@ -31,12 +32,17 @@ export default class NotifList extends React.Component {
 
   render() {
     const notifs = this.state.notifs;
+    const roles = this.state.roles;
 
-    if(!notifs)
+    if(!notifs || !roles)
       return <Spinner/>;
 
     return (
-      <MyDrawerLayout navigator={this.props.navigator} title='Уведомления'>
+      <MyDrawerLayout
+        navigator={this.props.navigator}
+        title='Уведомления'
+        roles={roles}
+      >
         <ListView
           dataSource={this.state.ds}
           renderRow={renderRow.bind(this)}
@@ -44,6 +50,15 @@ export default class NotifList extends React.Component {
           style={styles.list}/>
       </MyDrawerLayout>
     );
+  }
+
+  setRoles() {
+    AsyncStorage.getItem('roles', (err, res) => {
+      console.log(res);
+      this.setState({
+        roles: JSON.parse(res)
+      });
+    });
   }
 
   getNotifications() {
