@@ -9,6 +9,8 @@ import {
   Image
 } from 'react-native';
 
+
+import Role from '../enums/role';
 import Route from '../enums/route';
 import Api from '../enums/api';
 import Environment from '../environment/environment';
@@ -19,7 +21,7 @@ export default class AuthPage extends React.Component {
       <View style={styles.view}>
         <Image
           style={styles.image}
-          source={require('../images/logo1.png')}
+          source={require('../images/logo.png')}
         />
         <View style={styles.innerView}>
           <TextInput
@@ -64,12 +66,29 @@ function auth() {
     .then(resp => {
       let token = resp.access_token;
       if (token) {
-        AsyncStorage.setItem(
-          'client_token', JSON.stringify(token)
-        );
-        this.props.navigator.resetTo({
-          id: Route.newsList
-        });
+        fetch(Environment.BASE_URL + Api.role, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        })
+          .then(response => response.json())
+          .then(roles => {
+            console.log(roles);
+            if (roles.indexOf(Role.work) == -1) {
+              AsyncStorage.multiSet([
+                ['client_token', JSON.stringify(token)],
+                ['roles', JSON.stringify(roles)]
+              ]);
+              this.props.navigator.resetTo({
+                id: Route.newsList
+              });
+            } else {
+              Alert.alert('Сотрудники деканата не могут заходить!', 'ы');
+            }
+          })
+          .catch((error) => console.error(error))
+          .done();
       } else {
         Alert.alert('Упс!', 'ы');
       }
