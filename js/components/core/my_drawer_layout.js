@@ -27,33 +27,59 @@ export default class MyDrawerLayout extends React.Component {
   }
 
   render() {
-    const roles = this.state.roles;
-
-    if (!roles)
-      return <Spinner/>;
+    const route = this.props.navigator.getCurrentRoutes().pop().id;
 
     let sentNotifBut = null;
     let newNotifBut = null;
-    const route = this.props.navigator.getCurrentRoutes().pop().id;
+    let leftBut = this.renderMenuButton();
+    let rightBut =
+      <TouchableOpacity
+        style={styles.notifButtonContainer}
+        onPress={this.onPressNotif.bind(this)}
+      >
+        <EvilIcon name='bell' size={25} color='white'/>
+      </TouchableOpacity>
 
-    if (roles.indexOf(Role.star) !== -1 || roles.indexOf(Role.teach) !== -1) {
-      sentNotifBut =
+    if (route === Route.newNotif) {
+      leftBut =
         <TouchableOpacity
-          style={styles.drawerButton}
-          onPress={this.onPressSentNotif.bind(this)}>
-          <Text style={styles.drawerButtonText}>Отправленные уведомления</Text>
+          style={styles.menuButtonContainer}
+          onPress={this.onPressBack.bind(this)}
+        >
+          <EvilIcon name='close' size={25} color='white'/>
         </TouchableOpacity>
-      if (route === Route.notifList || route === Route.sentNotifList) {
-          newNotifBut =
-            <TouchableOpacity
-              style={styles.newNotifButtonContainer}
-              onPress={this.onPressNewNotif.bind(this)}
-            >
-              <EvilIcon name='pencil' size={25} color='white'/>
-            </TouchableOpacity>
+      rightBut =
+        <TouchableOpacity
+          style={styles.notifButtonContainer}
+          onPress={this.props.sendNotifCb}
+        >
+          <EvilIcon name='sc-telegram' size={25} color='white'/>
+        </TouchableOpacity>
+    } else {
+      const roles = this.state.roles;
+
+      if (!roles)
+        return <Spinner/>;
+
+      if (roles.indexOf(Role.star) !== -1 || roles.indexOf(Role.teach) !== -1) {
+        sentNotifBut =
+          <TouchableOpacity
+            style={styles.drawerButton}
+            onPress={this.onPressSentNotif.bind(this)}>
+            <Text style={styles.drawerButtonText}>Отправленные уведомления</Text>
+          </TouchableOpacity>
+        if (route === Route.notifList || route === Route.sentNotifList) {
+            newNotifBut =
+              <TouchableOpacity
+                style={styles.newNotifButtonContainer}
+                onPress={this.onPressNewNotif.bind(this)}
+              >
+                <EvilIcon name='pencil' size={25} color='white'/>
+              </TouchableOpacity>
+        }
       }
     }
-    return(
+    return (
       <DrawerLayout
         ref={(drawer) => {this.drawer = drawer;}}
         drawerWidth={250}
@@ -61,14 +87,9 @@ export default class MyDrawerLayout extends React.Component {
         <View style={styles.navBar}>
           <Text style={styles.navBarTitle}>{this.props.title}</Text>
           {newNotifBut}
-          <TouchableOpacity
-            style={styles.notifButtonContainer}
-            onPress={this.onPressNotif.bind(this)}
-          >
-            <EvilIcon name='bell' size={25} color='white'/>
-          </TouchableOpacity>
+          {rightBut}
         </View>
-        {this.renderMenuButton()}
+        {leftBut}
         {this.props.children}
       </DrawerLayout>
     );
@@ -115,6 +136,10 @@ export default class MyDrawerLayout extends React.Component {
     )
   }
 
+  onPressBack() {
+    this.props.navigator.pop();
+  }
+
   onPressNewNotif() {
     this.props.navigator.push({
       id: Route.newNotif
@@ -128,7 +153,7 @@ export default class MyDrawerLayout extends React.Component {
   }
 
   onPressSentNotif() {
-    this.props.navigator.push({
+    this.props.navigator.resetTo({
       id: Route.sentNotifList
     });
   }

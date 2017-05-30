@@ -11,6 +11,8 @@ import {
 import Api from '../../enums/api';
 import Environment from '../../environment/environment';
 
+import MyDrawerLayout from '../core/my_drawer_layout';
+
 export default class NewNotif extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,11 @@ export default class NewNotif extends React.Component {
 
   render() {
     return (
-      <View>
+      <MyDrawerLayout
+        navigator={this.props.navigator}
+        title='Новое уведомление'
+        sendNotifCb={sendNotification.bind(this)}
+      >
         <View>
           <TextInput
             placeholder="Тема"
@@ -34,9 +40,8 @@ export default class NewNotif extends React.Component {
             numberOfLines={7}
             onChangeText={(text) => this.setState({text})}
           />
-          <Button title="Отправить" onPress={sendNotification.bind(this)}/>
         </View>
-      </View>
+      </MyDrawerLayout>
     );
   }
 }
