@@ -15,7 +15,7 @@ import Environment from '../../environment/environment';
 
 import MyDrawerLayout from '../core/my_drawer_layout';
 
-export default class NotifList extends React.Component {
+export default class SentNotifList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -28,14 +28,13 @@ export default class NotifList extends React.Component {
   render() {
     const notifs = this.state.notifs;
 
-    if (!notifs)
+    if(!notifs)
       return <Spinner/>;
 
     return (
       <MyDrawerLayout
         navigator={this.props.navigator}
-        title='Уведомления'
-      >
+        title='Отправленные уведомления'>
         <ListView
           dataSource={dataSource.apply(this)}
           renderRow={renderRow.bind(this)}
@@ -48,7 +47,7 @@ export default class NotifList extends React.Component {
   getNotifications() {
     AsyncStorage.getItem('client_token', (err, token) => {
       token = JSON.parse(token);
-      fetch(Environment.BASE_URL + Api.notif, {
+      fetch(Environment.BASE_URL + Api.sentNotif, {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + token
@@ -74,9 +73,7 @@ function dataSource() {
 }
 
 function renderRow(notif) {
-  return <NotifRow notif={notif.notification}
-                   navigator={this.props.navigator}
-         />;
+  return <NotifRow notif={notif} navigator={this.props.navigator}/>;
 }
 
 // styles here...

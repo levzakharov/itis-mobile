@@ -8,6 +8,7 @@ import Spinner from './core/spinner';
 import AuthPage from './auth';
 import NewsList from './news/news_list';
 import NotifList from './notif/notif_list';
+import SentNotifList from './notif/sent_notif_list';
 import NewNotif from './notif/new_notif';
 import MySchedule from './schedule/my_schedule';
 
@@ -53,6 +54,8 @@ function navigatorRenderScene(route, navigator) {
       return <NewsList navigator={navigator}/>;
     case Route.notifList:
       return <NotifList navigator={navigator}/>;
+    case Route.sentNotifList:
+      return <SentNotifList navigator={navigator}/>;
     case Route.newNotif:
       return <NewNotif navigator={navigator}/>;
     case Route.mySchedule:
