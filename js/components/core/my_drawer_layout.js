@@ -175,7 +175,7 @@ export default class MyDrawerLayout extends React.Component {
 
   onPressSchedule() {
     this.props.navigator.resetTo({
-      id: Route.mySchedule
+      id: Route.schedule
     });
   }
 

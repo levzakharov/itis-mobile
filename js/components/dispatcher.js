@@ -11,7 +11,7 @@ import NotifList from './notif/notif_list';
 import SentNotifList from './notif/sent_notif_list';
 import NewNotif from './notif/new_notif';
 import NotifRec from './notif/notif_rec';
-import MySchedule from './schedule/my_schedule';
+import Schedule from './schedule/schedule';
 
 import Route from '../enums/route';
 
@@ -29,7 +29,8 @@ export default class InitialDispatcher extends React.Component {
       return <Spinner/>
     }
 
-    const initialRoute = token == null ? Route.auth : Route.newsList;
+    // const initialRoute = token == null ? Route.auth : Route.newsList;
+    const initialRoute = Route.schedule;
     return (
       <NavigationExperimental.Navigator
         initialRoute={{id: initialRoute}}
@@ -61,7 +62,7 @@ function navigatorRenderScene(route, navigator) {
       return <NewNotif navigator={navigator}/>;
     case Route.notifRec:
       return <NotifRec navigator={navigator}/>;
-    case Route.mySchedule:
-      return <MySchedule navigator={navigator}/>;
+    case Route.schedule:
+      return <Schedule navigator={navigator}/>;
   }
 }
