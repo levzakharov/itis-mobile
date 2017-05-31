@@ -14,6 +14,7 @@ import Route from '../../enums/route';
 import Role from '../../enums/role';
 import DrawerLayout from 'react-native-drawer-layout';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class MyDrawerLayout extends React.Component {
 
@@ -75,7 +76,8 @@ export default class MyDrawerLayout extends React.Component {
           <TouchableOpacity
             style={styles.drawerButton}
             onPress={this.onPressSentNotif.bind(this)}>
-            <Text style={styles.drawerButtonText}>Отправленные уведомления</Text>
+              <FontAwesome name='envelope-o' size={25} color='white'/>
+              <Text style={styles.drawerButtonText}>Отправленные уведомления</Text>
           </TouchableOpacity>
         if (route === Route.notifList || route === Route.sentNotifList) {
             newNotifBut =
@@ -130,14 +132,17 @@ export default class MyDrawerLayout extends React.Component {
       <View style={{backgroundColor: '#275589', flex: 1}}>
         <View style={styles.drawerButtonsContainer}>
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressNews.bind(this)}>
+            <FontAwesome name='newspaper-o' size={25} color='white'/>
             <Text style={styles.drawerButtonText}>Новости</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressSchedule.bind(this)}>
+            <FontAwesome name='calendar' size={25} color='white'/>
             <Text style={styles.drawerButtonText}>Расписание</Text>
           </TouchableOpacity>
           {sentNotifBut}
           <TouchableOpacity style={styles.drawerButton} onPress={this.onLogout.bind(this)}>
+            <FontAwesome name='sign-out' size={25} color='white'/>
             <Text style={styles.drawerButtonText}>Выйти</Text>
           </TouchableOpacity>
         </View>

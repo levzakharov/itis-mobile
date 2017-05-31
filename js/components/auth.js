@@ -83,13 +83,13 @@ function auth() {
                 id: Route.newsList
               });
             } else {
-              Alert.alert('Сотрудники деканата не могут заходить!', 'ы');
+              Alert.alert('Уважаемые сотрудники деканата', 'Для вас доступна веб версия сервиса');
             }
           })
           .catch((error) => console.error(error))
           .done();
       } else {
-        Alert.alert('Упс!', 'ы');
+        Alert.alert('Пользователь с такими данными не найден', 'Попробуйте еще раз');
       }
     })
     .catch((error) => console.log(error))

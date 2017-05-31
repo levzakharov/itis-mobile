@@ -37,6 +37,7 @@ export default class NewNotif extends React.Component {
             .forEach(function(gNumber) {
               displayGroups.push(gNumber);
             });
+      displayGroups = displayGroups.toString();
     }
 
     return (
@@ -53,7 +54,7 @@ export default class NewNotif extends React.Component {
           <TextInput
             placeholder="Выбрать номера групп"
             onFocus={this.onFocus.bind(this)}
-            defaultValue={displayGroups.toString()}
+            defaultValue={displayGroups}
           />
           <TextInput
             placeholder="Текст"

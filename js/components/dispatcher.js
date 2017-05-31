@@ -29,8 +29,8 @@ export default class InitialDispatcher extends React.Component {
       return <Spinner/>
     }
 
-    // const initialRoute = token == null ? Route.auth : Route.newsList;
-    const initialRoute = Route.schedule;
+    const initialRoute = token == null ? Route.auth : Route.newsList;
+    // const initialRoute = Route.schedule;
     return (
       <NavigationExperimental.Navigator
         initialRoute={{id: initialRoute}}
