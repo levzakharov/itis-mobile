@@ -100,9 +100,9 @@ function renderRow(group) {
 function addGroupCb(group, on) {
   let groups = this.state.selectedGroups;
   if (on) {
-    groups.add(group.number);
+    groups.add(group);
   } else {
-    groups.delete(group.number);
+    groups.delete(group);
   }
   this.setState({
     selectedGroups: groups
