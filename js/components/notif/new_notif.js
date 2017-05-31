@@ -30,6 +30,15 @@ export default class NewNotif extends React.Component {
       return <Spinner/>
     }
 
+    let displayGroups = null;
+    if (groups) {
+      displayGroups = [];
+      groups.map(g => g.number)
+            .forEach(function(gNumber) {
+              displayGroups.push(gNumber);
+            });
+    }
+
     return (
       <MyDrawerLayout
         navigator={this.props.navigator}
@@ -44,7 +53,7 @@ export default class NewNotif extends React.Component {
           <TextInput
             placeholder="Выбрать номера групп"
             onFocus={this.onFocus.bind(this)}
-            defaultValue={groups}
+            defaultValue={displayGroups.toString()}
           />
           <TextInput
             placeholder="Текст"
@@ -66,7 +75,7 @@ export default class NewNotif extends React.Component {
   setSelectedGroups() {
     AsyncStorage.getItem('groups', (err, res) => {
       this.setState({
-        groups: JSON.parse(res).toString()
+        groups: JSON.parse(res)
       });
     });
   }
@@ -75,6 +84,12 @@ export default class NewNotif extends React.Component {
 function sendNotification() {
   AsyncStorage.getItem('client_token', (err, token) => {
     token = JSON.parse(token);
+    let groupIds = [];
+    this.state.groups
+      .map(g => g.id)
+      .forEach(function(gId) {
+        groupIds.push(gId);
+      });
     fetch(Environment.BASE_URL + Api.newNotif, {
       method: 'POST',
       headers: {
@@ -83,14 +98,14 @@ function sendNotification() {
         'Authorization': 'Bearer ' + token
       },
       body: JSON.stringify({
-        groups: this.state.groups.split(' '),
+        groups: groupIds,
         theme: this.state.theme,
         text: this.state.text
       })
     })
       .then(response => response.json())
       .then(resp => {
-        this.props.navigator.pop();
+        this.props.navigator.resetTo({id: Route.sentNotifList});
       })
       .catch((error) => console.error(error))
       .done();
