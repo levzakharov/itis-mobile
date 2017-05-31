@@ -5,5 +5,6 @@ export default Api = {
   notif: '/api/v2/notifications/unread',
   sentNotif: '/api/v2/notifications/send',
   newNotif: '/api/v2/notifications/add/new/notification',
-  notifRec: '/api/v2/groups'
+  notifRec: '/api/v2/groups',
+  schedule: '/api/v2/timetable'
 }

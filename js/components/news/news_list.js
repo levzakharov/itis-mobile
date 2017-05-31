@@ -45,6 +45,7 @@ export default class NewsList extends React.Component {
   getNews() {
     AsyncStorage.getItem('client_token', (err, token) => {
       token = JSON.parse(token);
+      console.log('TOKEN', token);
       fetch(Environment.BASE_URL + Api.news, {
         headers: {
           'Accept': 'application/json',
