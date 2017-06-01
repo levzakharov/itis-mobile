@@ -131,12 +131,16 @@ export default class MyDrawerLayout extends React.Component {
 
   renderMenu(sentNotifBut) {
     return (
-      <View style={{backgroundColor: '#275589', flex: 1}}>
+      <View style={{backgroundColor: '#3c4068', flex: 1}}>
         <View style={styles.drawerButtonsContainer}>
-          <Image
-            style={styles.image}
-            source={require('../../images/logo.png')}
-          />
+          <View style={{flexDirection: 'row'}}>
+            <Image
+              style={[styles.image, {marginRight: 10}]}
+              source={require('../../images/LogoForMenu.png')}
+            />
+            <Text style={{color: 'white', fontSize: 25, marginTop: -5}}>Itis</Text>
+            <Text style={{color: '#e2d52c', fontSize: 25, marginTop: -5}}>Portal</Text>
+          </View>
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressNews.bind(this)}>
             <View style={{flexDirection: 'row'}}>
               <FontAwesome name='newspaper-o' size={20} color='white'/>
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   drawerButton: {
-    backgroundColor: '#275589',
+    backgroundColor: '#3c4068',
     padding: 15,
     marginBottom: 0
   },
@@ -250,11 +254,12 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   image: {
-    width: 55,
-    height: 55,
+    width: 45,
+    height: 45,
     marginTop: -15,
     marginBottom: 20,
+    marginLeft: 10,
     resizeMode: 'stretch',
-    alignSelf: 'center'
+    alignSelf: 'flex-start'
   }
 });
