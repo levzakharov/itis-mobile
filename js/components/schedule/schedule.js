@@ -122,16 +122,14 @@ export default class Schedule extends React.Component {
         firstIter = true;
 
         for(var k in day[key]) {
-          if(day[key][k].userGroup.number) {
-            let grSubjPlace = '(' + day[key][k].userGroup.number+ ') '
-              + day[key][k].name + ', ' + day[key][k].place;
+          let grSubjPlace = '(' + day[key][k].userGroup.number+ ') '
+            + day[key][k].name + ', ' + day[key][k].place;
 
-            if(firstIter) {
-              firstIter = false;
-              result.push([intervals[idx], grSubjPlace]);
-            } else {
-              result.push(['', grSubjPlace]);
-            }
+          if(firstIter) {
+            firstIter = false;
+            result.push([intervals[idx], grSubjPlace]);
+          } else {
+            result.push(['', grSubjPlace]);
           }
         }
       } else {
