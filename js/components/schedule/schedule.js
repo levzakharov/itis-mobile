@@ -20,7 +20,7 @@ const intervals = ['08:30', '10:10', '11:50', '13:35', '15:20', '17:00', '18:40'
 export default class Schedule extends React.Component {
   constructor() {
     super();
-    this.state = {scheduleNumber: 1, dayNumber: 1};
+    this.state = {dayNumber: 1};
   }
 
   componentDidMount() {
@@ -33,30 +33,12 @@ export default class Schedule extends React.Component {
     if(!schedule)
       return <Spinner/>;
 
-    let tableHead;
-    let tableData;
-
-    if(this.state.scheduleNumber === 1) {
-      tableHead = ['Время', 'Предмет'];
-      tableData = this.constructPersonalTableData();
-    } else {
-      tableHead = ['Время', 'Группа', 'Предмет'];
-      tableData = this.constructOverallTableData();
-    }
+    let tableHead = ['Время', 'Предмет'];
+    let tableData = this.constructTableData();
 
     return (
       <MyDrawerLayout navigator={this.props.navigator} title='Расписание'>
         <View>
-          <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-            <TouchableOpacity style={[styles.selectScheduleButton, this.selectSchedule(1)]}
-                              onPress={this.onSelectSchedulePress.bind(this, 1)}>
-              <Text style={{alignSelf: 'center', color: 'white'}}>Личное</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.selectScheduleButton, this.selectSchedule(2)]}
-                              onPress={this.onSelectSchedulePress.bind(this, 2)}>
-              <Text style={{alignSelf: 'center', color: 'white'}}>Общее</Text>
-            </TouchableOpacity>
-          </View>
           <View style={{flexDirection:'row', flexWrap:'wrap', backgroundColor: 'gray'}}>
             <TouchableOpacity style={[styles.weekButton, this.dayColor(1)]}
                               onPress={this.onDayOfTheWeekPress.bind(this, 1)}>
@@ -96,7 +78,7 @@ export default class Schedule extends React.Component {
     )
   }
 
-  constructPersonalTableData() {
+  constructTableData() {
     let dayOfTheWeek = this.getDayOfTheWeek();
     let day = this.state.schedule[dayOfTheWeek];
 
@@ -108,34 +90,6 @@ export default class Schedule extends React.Component {
         result.push([intervals[idx], day[key][0]['name']]);
       } else {
         result.push([intervals[idx], '']);
-      }
-      idx++;
-    });
-
-    return result;
-  }
-
-  constructOverallTableData() {
-    let dayOfTheWeek = this.getDayOfTheWeek();
-    let day = this.state.schedule[dayOfTheWeek];
-
-    let result = [];
-    let idx = 0;
-
-    Object.keys(day).forEach(function(key) {
-      if(day[key].length != 0) {
-        firstIter = true;
-
-        for(var k in day[key]) {
-          if(firstIter) {
-            firstIter = false;
-            result.push([intervals[idx], day[key][k].userGroup.number, day[key][k].name]);
-          } else {
-            result.push(['', day[key][k].userGroup.number, day[key][k].name]);
-          }
-        }
-      } else {
-        result.push([intervals[idx], '', '']);
       }
       idx++;
     });
@@ -162,21 +116,8 @@ export default class Schedule extends React.Component {
     }
   }
 
-  onSelectSchedulePress(scheduleNumber) {
-    this.state.scheduleNumber = scheduleNumber;
-    this.getSchedule();
-  }
-
   onDayOfTheWeekPress(dayNumber) {
     this.setState({dayNumber: dayNumber});
-  }
-
-  selectSchedule(scheduleNumber) {
-    if (this.state.scheduleNumber === scheduleNumber)
-      return {backgroundColor: '#00bfff'};
-    else {
-      return {backgroundColor: 'gray'};
-    }
   }
 
   dayColor(dayNumber) {
@@ -185,42 +126,22 @@ export default class Schedule extends React.Component {
   }
 
   getSchedule() {
-    if(this.state.scheduleNumber == 1) {
-      AsyncStorage.getItem('client_token', (err, token) => {
-      token = JSON.parse(token);
-      console.log('TOKEN' + token);
+    AsyncStorage.getItem('client_token', (err, token) => {
+    token = JSON.parse(token);
 
-      fetch(Environment.BASE_URL + Api.schedule + '?interval=week&personality=1', {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token
-          }
-        })
-        .then(response => response.json())
-        .then(resp => {
-          this.setState({schedule: resp});
-        })
-        .catch((error) => console.error(error))
-        .done();
-      });
-    } else {
-      AsyncStorage.getItem('client_token', (err, token) => {
-      token = JSON.parse(token);
-
-      fetch(Environment.BASE_URL + Api.schedule + '?interval=week&personality=overall', {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token
-          }
-        })
-        .then(response => response.json())
-        .then(resp => {
-          this.setState({schedule: resp});
-        })
-        .catch((error) => console.error(error))
-        .done();
-      });
-    }
+    fetch(Environment.BASE_URL + Api.schedule + '?interval=week&personality=1', {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(response => response.json())
+      .then(resp => {
+        this.setState({schedule: resp});
+      })
+      .catch((error) => console.error(error))
+      .done();
+    });
   }
 }
 
@@ -245,11 +166,6 @@ const styles = StyleSheet.create({
   },
   weekButton: {
     width: '14%',
-    height: 30,
-    paddingTop: 5
-  },
-  selectScheduleButton: {
-    width: '50%',
     height: 30,
     paddingTop: 5
   }
