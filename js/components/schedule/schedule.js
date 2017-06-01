@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   row: {
-    height: 30
+    height: 50
   },
   dayOfTheWeek: {
     alignSelf: 'center',
