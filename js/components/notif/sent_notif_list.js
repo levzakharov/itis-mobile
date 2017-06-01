@@ -34,7 +34,7 @@ export default class SentNotifList extends React.Component {
     return (
       <MyDrawerLayout
         navigator={this.props.navigator}
-        title='Отправленные уведомления'>
+        title='Отправ. уведомления'>
         <ListView
           dataSource={dataSource.apply(this)}
           renderRow={renderRow.bind(this)}

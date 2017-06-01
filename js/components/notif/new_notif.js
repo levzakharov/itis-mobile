@@ -46,7 +46,7 @@ export default class NewNotif extends React.Component {
         title='Новое уведомление'
         sendNotifCb={sendNotification.bind(this)}
       >
-        <View>
+        <View style={{padding: 15}}>
           <TextInput
             placeholder="Тема"
             onChangeText={(theme) => this.setState({theme})}
@@ -59,7 +59,7 @@ export default class NewNotif extends React.Component {
           <TextInput
             placeholder="Текст"
             multiline={true}
-            numberOfLines={7}
+            numberOfLines={10}
             onChangeText={(text) => this.setState({text})}
           />
         </View>

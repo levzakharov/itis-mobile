@@ -21,7 +21,7 @@ export default class AuthPage extends React.Component {
       <View style={styles.view}>
         <Image
           style={styles.image}
-          source={require('../images/logo.png')}
+          source={require('../images/logo1.png')}
         />
         <View style={styles.innerView}>
           <TextInput
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
 
   // image style
   image: {
-    width: 80,
-    height: 80,
-    marginTop: 40,
+    width: 180,
+    height: 30,
+    marginTop: 50,
     resizeMode: 'stretch',
     alignSelf: 'center'
   }

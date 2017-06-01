@@ -22,8 +22,8 @@ export default class Group extends React.Component {
     const group = this.props.group;
 
     return (
-      <View>
-        <Text>{group.number}</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={{paddingTop: 3, paddingRight: 10}}>{group.number}</Text>
         <Switch
           onValueChange={(on) => {
             this.setState({on});

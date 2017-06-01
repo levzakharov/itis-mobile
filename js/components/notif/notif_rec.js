@@ -111,4 +111,7 @@ function addGroupCb(group, on) {
 
 // styles here...
 const styles = StyleSheet.create({
+  list: {
+    padding: 20
+  }
 });

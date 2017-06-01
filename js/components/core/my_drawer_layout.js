@@ -76,8 +76,10 @@ export default class MyDrawerLayout extends React.Component {
           <TouchableOpacity
             style={styles.drawerButton}
             onPress={this.onPressSentNotif.bind(this)}>
-              <FontAwesome name='envelope-o' size={25} color='white'/>
-              <Text style={styles.drawerButtonText}>Отправленные уведомления</Text>
+              <View style={{flexDirection: 'row'}}>
+                <FontAwesome name='envelope-o' size={20} color='white'/>
+                <Text style={styles.drawerButtonText}>Отправленные уведомления</Text>
+              </View>
           </TouchableOpacity>
         if (route === Route.notifList || route === Route.sentNotifList) {
             newNotifBut =
@@ -131,19 +133,29 @@ export default class MyDrawerLayout extends React.Component {
     return (
       <View style={{backgroundColor: '#275589', flex: 1}}>
         <View style={styles.drawerButtonsContainer}>
+          <Image
+            style={styles.image}
+            source={require('../../images/logo.png')}
+          />
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressNews.bind(this)}>
-            <FontAwesome name='newspaper-o' size={25} color='white'/>
-            <Text style={styles.drawerButtonText}>Новости</Text>
+            <View style={{flexDirection: 'row'}}>
+              <FontAwesome name='newspaper-o' size={20} color='white'/>
+              <Text style={styles.drawerButtonText}>Новости</Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.drawerButton} onPress={this.onPressSchedule.bind(this)}>
-            <FontAwesome name='calendar' size={25} color='white'/>
-            <Text style={styles.drawerButtonText}>Расписание</Text>
+            <View style={{flexDirection: 'row'}}>
+              <FontAwesome name='calendar' size={20} color='white'/>
+              <Text style={styles.drawerButtonText}>Расписание</Text>
+            </View>
           </TouchableOpacity>
           {sentNotifBut}
           <TouchableOpacity style={styles.drawerButton} onPress={this.onLogout.bind(this)}>
-            <FontAwesome name='sign-out' size={25} color='white'/>
-            <Text style={styles.drawerButtonText}>Выйти</Text>
+            <View style={{flexDirection: 'row'}}>
+              <FontAwesome name='sign-out' size={20} color='white'/>
+              <Text style={styles.drawerButtonText}>Выйти</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -234,6 +246,15 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   drawerButtonText: {
+    marginLeft: 10,
     color: '#fff'
+  },
+  image: {
+    width: 55,
+    height: 55,
+    marginTop: -15,
+    marginBottom: 20,
+    resizeMode: 'stretch',
+    alignSelf: 'center'
   }
 });
