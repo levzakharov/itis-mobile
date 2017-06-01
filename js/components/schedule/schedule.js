@@ -4,12 +4,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-  AsyncStorage
+  AsyncStorage,
+  Alert,
+  ScrollView
 } from 'react-native';
 
 import Environment from '../../environment/environment.js';
 import Api from '../../enums/api';
 import Spinner from '../core/spinner';
+import Role from '../../enums/role';
 
 import MyDrawerLayout from '../core/my_drawer_layout';
 
@@ -29,12 +32,20 @@ export default class Schedule extends React.Component {
 
   render() {
     const schedule = this.state.schedule;
+    const roles = this.state.roles;
 
-    if(!schedule)
+    if(!schedule || !roles)
       return <Spinner/>;
 
-    let tableHead = ['Время', 'Предмет'];
-    let tableData = this.constructTableData();
+    let tableHead;
+    let tableData;
+
+    tableHead = ['Время', 'Предмет'];
+    if(roles.indexOf(Role.teach) !== -1) {
+      tableData = this.constructTeacherTableData();
+    } else {
+      tableData = this.constructStudentTableData();
+    }
 
     return (
       <MyDrawerLayout navigator={this.props.navigator} title='Расписание'>
@@ -69,16 +80,18 @@ export default class Schedule extends React.Component {
               <Text style={styles.dayOfTheWeek}>Вс</Text>
             </TouchableOpacity>
           </View>
-          <Table>
-            <Row data={tableHead} style={styles.head} textStyle={styles.tableText}/>
-            <Rows data={tableData} style={styles.row} textStyle={styles.tableText}/>
-          </Table>
+          <ScrollView>
+            <Table>
+              <Row data={tableHead} style={styles.head} textStyle={styles.tableText}/>
+              <Rows data={tableData} style={styles.row} textStyle={styles.tableText}/>
+            </Table>
+          </ScrollView>
         </View>
       </MyDrawerLayout>
     )
   }
 
-  constructTableData() {
+  constructStudentTableData() {
     let dayOfTheWeek = this.getDayOfTheWeek();
     let day = this.state.schedule[dayOfTheWeek];
 
@@ -87,7 +100,40 @@ export default class Schedule extends React.Component {
 
     Object.keys(day).forEach(function(key) {
       if(day[key].length != 0) {
-        result.push([intervals[idx], day[key][0]['name']]);
+        result.push([intervals[idx], day[key][0]['name'] + ', ' + day[key][0]['place']]);
+      } else {
+        result.push([intervals[idx], '']);
+      }
+      idx++;
+    });
+
+    return result;
+  }
+
+  constructTeacherTableData() {
+    let dayOfTheWeek = this.getDayOfTheWeek();
+    let day = this.state.schedule[dayOfTheWeek];
+
+    let result = [];
+    let idx = 0;
+
+    Object.keys(day).forEach(function(key) {
+      if(day[key].length != 0) {
+        firstIter = true;
+
+        for(var k in day[key]) {
+          if(day[key][k].userGroup.number) {
+            let grSubjPlace = '(' + day[key][k].userGroup.number+ ') '
+              + day[key][k].name + ', ' + day[key][k].place;
+
+            if(firstIter) {
+              firstIter = false;
+              result.push([intervals[idx], grSubjPlace]);
+            } else {
+              result.push(['', grSubjPlace]);
+            }
+          }
+        }
       } else {
         result.push([intervals[idx], '']);
       }
@@ -126,21 +172,25 @@ export default class Schedule extends React.Component {
   }
 
   getSchedule() {
-    AsyncStorage.getItem('client_token', (err, token) => {
-    token = JSON.parse(token);
+    AsyncStorage.getItem('roles', (err, res) => {
+      roles = JSON.parse(res);
 
-    fetch(Environment.BASE_URL + Api.schedule + '?interval=week&personality=1', {
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + token
-        }
-      })
-      .then(response => response.json())
-      .then(resp => {
-        this.setState({schedule: resp});
-      })
-      .catch((error) => console.error(error))
-      .done();
+      AsyncStorage.getItem('client_token', (err, token) => {
+      token = JSON.parse(token);
+
+      fetch(Environment.BASE_URL + Api.schedule + '?interval=week&personality=1', {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        })
+        .then(response => response.json())
+        .then(resp => {
+          this.setState({schedule: resp, roles: roles});
+        })
+        .catch((error) => console.error(error))
+        .done();
+      });
     });
   }
 }
@@ -158,7 +208,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   row: {
-    height: 50
+    height: 60
   },
   dayOfTheWeek: {
     alignSelf: 'center',
